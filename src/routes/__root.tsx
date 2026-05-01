@@ -3,21 +3,21 @@ import {
     HeadContent,
     Scripts,
     createRootRouteWithContext,
-} from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import TanStackQueryProvider from '../integrations/tanstack-query/root-provider'
-import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
-import appCss from '../styles.css?url'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import type { QueryClient } from '@tanstack/react-query'
+} from '@tanstack/react-router';
+import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { TanStackDevtools } from '@tanstack/react-devtools';
+import TanStackQueryProvider from '../integrations/tanstack-query/root-provider';
+import TanStackQueryDevtools from '../integrations/tanstack-query/devtools';
+import appCss from '../styles.css?url';
+import Header from '@/components/common/Header/Header';
+import Footer from '@/components/Footer';
+import type { QueryClient } from '@tanstack/react-query';
 
 interface MyRouterContext {
-    queryClient: QueryClient
+    queryClient: QueryClient;
 }
 
-const THEME_INIT_SCRIPT = `(function(){try{var stored=window.localStorage.getItem('theme');var mode=(stored==='light'||stored==='dark'||stored==='auto')?stored:'auto';var prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;var resolved=mode==='auto'?(prefersDark?'dark':'light'):mode;var root=document.documentElement;root.classList.remove('light','dark');root.classList.add(resolved);if(mode==='auto'){root.removeAttribute('data-theme')}else{root.setAttribute('data-theme',mode)}root.style.colorScheme=resolved;}catch(e){}})();`
+const THEME_INIT_SCRIPT = `(function(){try{var stored=window.localStorage.getItem('theme');var mode=(stored==='light'||stored==='dark'||stored==='auto')?stored:'auto';var prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;var resolved=mode==='auto'?(prefersDark?'dark':'light'):mode;var root=document.documentElement;root.classList.remove('light','dark');root.classList.add(resolved);if(mode==='auto'){root.removeAttribute('data-theme')}else{root.setAttribute('data-theme',mode)}root.style.colorScheme=resolved;}catch(e){}})();`;
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
     head: () => ({
@@ -38,11 +38,25 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
                 rel: 'stylesheet',
                 href: appCss,
             },
+            {
+                rel: 'icon',
+                type: 'image/png',
+                href: '/favicon-96x96.png',
+                sizes: '96x96',
+            },
+            { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+            { rel: 'shortcut icon', href: '/favicon.ico' },
+            {
+                rel: 'apple-touch-icon',
+                sizes: '180x180',
+                href: '/apple-touch-icon.png',
+            },
+            { rel: 'manifest', href: '/manifest.json' },
         ],
     }),
     shellComponent: RootDocument,
     notFoundComponent: () => <div>404</div>,
-})
+});
 
 function RootDocument({ children }: { children: React.ReactNode }) {
     return (
@@ -74,5 +88,5 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 <Scripts />
             </body>
         </html>
-    )
+    );
 }
